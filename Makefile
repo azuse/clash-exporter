@@ -10,7 +10,7 @@ darwin-arm64:
 	GOOS=darwin GOARCH=arm64 go build -o $(NAME)-${VERSION}-$@
 	tar czf $(NAME)-${VERSION}-$@.tar.gz $(NAME)-${VERSION}-$@
 linux-amd64:
-	GOOS=linux GOARCH=amd64 CGO_ENABLE=0 go build -o $(NAME)-${VERSION}-$@
+	GOOS=linux GOARCH=amd64 CGO_ENABLE=0 go build -ldflags "-linkmode 'external' -extldflags '-static'" -o $(NAME)-${VERSION}-$@
 	tar czf $(NAME)-${VERSION}-$@.tar.gz $(NAME)-${VERSION}-$@
 linux-arm64:
 	GOOS=linux GOARCH=arm64 go build -o $(NAME)-${VERSION}-$@
