@@ -21,6 +21,9 @@ linux-armv6:
 linux-armv7:
 	GOOS=linux GOARCH=arm GOARM=7 go build -o $(NAME)-${VERSION}-$@
 	tar czf $(NAME)-${VERSION}-$@.tar.gz $(NAME)-${VERSION}-$@
+windows-amd64:
+	GOOS=windows GOARCH=amd64 go build -o $(NAME)-${VERSION}-$@
+	tar czf $(NAME)-${VERSION}-$@.tar.gz $(NAME)-${VERSION}-$@
 
 clean:
 	rm -rf $(NAME)-*
