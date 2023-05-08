@@ -1,7 +1,7 @@
 NAME=clash-exporter
 VERSION=$(shell git describe --tags --always)
 
-releases: darwin-amd64 darwin-arm64 linux-amd64 linux-arm64 linux-armv6 linux-armv7
+releases: darwin-amd64 darwin-arm64 linux-amd64 linux-arm64 linux-armv6 linux-armv7 windows-amd64
 
 darwin-amd64:
 	GOOS=darwin GOARCH=amd64 go build -o $(NAME)-${VERSION}-$@
