@@ -4,6 +4,10 @@ This is an exporter for Clash, for used by the [Prometheus](https://prometheus.i
 
 ![](./images/grafana.png)
 
+* Alternative Panel 
+[dashboard-alternative.json](./grafana/dashboard-alternative.json)
+![](./images/panel2.png)
+
 ### Usage
 
 ```
