@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"time"
+	"strings"
 
 	"github.com/pkg/errors"
 
@@ -97,8 +98,8 @@ func (c *Connection) Collect(config CollectConfig) error {
 			if !config.CollectDest {
 				destination = ""
 			}
-			networkTrafficTotal.WithLabelValues(connection.Metadata.SourceIP, destination, connection.Chains[0], "download").Add(float64(connection.Download) - float64(c.connectionCache[connection.ID].Download))
-			networkTrafficTotal.WithLabelValues(connection.Metadata.SourceIP, destination, connection.Chains[0], "upload").Add(float64(connection.Upload) - float64(c.connectionCache[connection.ID].Upload))
+			networkTrafficTotal.WithLabelValues(connection.Metadata.SourceIP, destination, connection.Chains[0], strings.Join(connection.Chains, "<-"), connection.Chains[-1], "download").Add(float64(connection.Download) - float64(c.connectionCache[connection.ID].Download))
+			networkTrafficTotal.WithLabelValues(connection.Metadata.SourceIP, destination, connection.Chains[0], strings.Join(connection.Chains, "<-"), connection.Chains[-1], "upload").Add(float64(connection.Upload) - float64(c.connectionCache[connection.ID].Upload))
 			c.connectionCache[connection.ID] = connection
 			activeConnectionsMap[connection.ID] = nil
 		}
@@ -143,7 +144,7 @@ func init() {
 			Name:      "network_traffic_bytes_total",
 			Help:      "Total number of bytes downloaded/uploaded, categorized by source, destination, and policy.",
 		},
-		[]string{"source", "destination", "policy", "type"},
+		[]string{"source", "destination", "policy", "chains", "chain_last", "type"},
 	)
 
 	prometheus.MustRegister(uploadTotal, downloadTotal, activeConnections, networkTrafficTotal)
