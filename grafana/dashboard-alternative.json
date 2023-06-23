@@ -97,7 +97,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -108,15 +107,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "super-light-blue",
+                "color": "#c0b8ff",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
-          }
+          },
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -126,7 +122,7 @@
         "x": 0,
         "y": 1
       },
-      "id": 24,
+      "id": 40,
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -136,7 +132,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^ClashVersion$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
@@ -150,13 +146,14 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "label_join(clash_info, \"ClashVersion\", \", is_premium: \", \"version\", \"premium\")",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "Clash Version",
-          "range": false,
-          "refId": "B"
+          "expr": "sum(clash_network_traffic_bytes_total{source=~\"$source\", policy!=\"DIRECT\", policy=~\"$policy\",type=~\"$type\"})",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "国际流量",
+          "range": true,
+          "refId": "A"
         }
       ],
       "transformations": [],
@@ -177,7 +174,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "super-light-green",
+                "color": "#b8c0ff",
                 "value": null
               }
             ]
@@ -192,7 +189,7 @@
         "x": 3,
         "y": 1
       },
-      "id": 2,
+      "id": 41,
       "options": {
         "colorMode": "background",
         "graphMode": "area",
@@ -215,14 +212,18 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "exemplar": true,
-          "expr": "clash_download_bytes_total",
+          "exemplar": false,
+          "expr": "sum(clash_network_traffic_bytes_total{source=~\"$source\", policy=\"DIRECT\", policy=~\"$policy\",type=~\"$type\"})",
+          "format": "time_series",
+          "instant": false,
           "interval": "",
-          "legendFormat": "总下载量",
+          "intervalFactor": 1,
+          "legendFormat": "国内流量",
           "range": true,
           "refId": "A"
         }
       ],
+      "transformations": [],
       "type": "stat"
     },
     {
@@ -240,133 +241,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "super-light-yellow",
-                "value": null
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 6,
-        "y": 1
-      },
-      "id": 3,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.2.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "exemplar": true,
-          "expr": "clash_upload_bytes_total",
-          "interval": "",
-          "legendFormat": "总上传量",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "super-light-orange",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 9,
-        "y": 1
-      },
-      "id": 6,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.2.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "exemplar": true,
-          "expr": "clash_active_connections",
-          "interval": "",
-          "legendFormat": "连接数",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "super-light-red",
+                "color": "#ffa6a6",
                 "value": null
               }
             ]
@@ -378,7 +253,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 12,
+        "x": 6,
         "y": 1
       },
       "id": 31,
@@ -444,7 +319,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 15,
+        "x": 9,
         "y": 1
       },
       "id": 18,
@@ -487,24 +362,255 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "super-light-green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
       "gridPos": {
-        "h": 12,
-        "w": 6,
+        "h": 4,
+        "w": 3,
+        "x": 12,
+        "y": 1
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "clash_download_bytes_total",
+          "interval": "",
+          "legendFormat": "总下载量",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "super-light-yellow",
+                "value": null
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 1
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "clash_upload_bytes_total",
+          "interval": "",
+          "legendFormat": "总上传量",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "super-light-orange",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
         "x": 18,
         "y": 1
       },
-      "id": 36,
+      "id": 6,
       "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
         },
-        "content": "<div style=\"display: flex;justify-content: center;align-items: center;overflow: hidden;width:100%;heigt:100%\">\n<img src=\"https://azusebox.moe/wp-content/uploads/2023/06/yande.re-971345-ke-ta-konpaku_youmu-myon-touhou.png\" style=\"object-fit: fill;flex-shrink: 0;min-width: 100%;min-height: 100%;width: auto;\"></img>\n</div>",
-        "mode": "html"
+        "textMode": "auto"
       },
       "pluginVersion": "9.2.1",
-      "type": "text"
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "clash_active_connections",
+          "interval": "",
+          "legendFormat": "连接数",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#2e3136",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 21,
+        "y": 1
+      },
+      "id": 24,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^ClashVersion$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "label_join(clash_info, \"ClashVersion\", \", \\n is_premium: \", \"version\", \"premium\")",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Clash Version",
+          "range": false,
+          "refId": "B"
+        }
+      ],
+      "transformations": [],
+      "type": "stat"
     },
     {
       "datasource": {
@@ -563,8 +669,140 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 4,
+        "w": 3,
         "x": 0,
+        "y": 5
+      },
+      "id": 42,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 18,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "总流量"
+          }
+        ]
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (chain_last) (clash_network_traffic_bytes_total{source=~\"$source\", policy=~\"$policy\", type=~\"$type\"})",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "来源",
+          "refId": "A"
+        }
+      ],
+      "title": "代理总流量",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "source": false
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Value": "总流量",
+              "Value #A": "总流量",
+              "chain_last": "节点组",
+              "policy": "策略"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-BlYlRd"
+          },
+          "custom": {
+            "align": "right",
+            "displayMode": "auto",
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "decbits"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "总流量"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "节点组"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 130
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "策略"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 141
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 3,
         "y": 5
       },
       "id": 25,
@@ -596,7 +834,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (chain_last) (clash_network_traffic_bytes_total{source=~\"$source\", policy=~\"$policy\", type=~\"$type\"})",
+          "expr": "sum by (policy) (clash_network_traffic_bytes_total{source=~\"$source\", policy=~\"$policy\", type=~\"$type\"})",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -718,7 +956,7 @@
       "gridPos": {
         "h": 8,
         "w": 3,
-        "x": 4,
+        "x": 6,
         "y": 5
       },
       "id": 34,
@@ -866,7 +1104,7 @@
       "gridPos": {
         "h": 8,
         "w": 3,
-        "x": 7,
+        "x": 9,
         "y": 5
       },
       "id": 33,
@@ -1014,7 +1252,7 @@
       "gridPos": {
         "h": 8,
         "w": 8,
-        "x": 10,
+        "x": 12,
         "y": 5
       },
       "id": 32,
@@ -1049,7 +1287,7 @@
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{chain_last}}",
+          "legendFormat": "{{chain_last}} D",
           "range": true,
           "refId": "A"
         },
@@ -1060,19 +1298,43 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(rate(clash_network_traffic_bytes_total{type=\"upload\"}[30s]))",
+          "expr": "sum by (chain_last) (rate(clash_network_traffic_bytes_total{type=\"upload\"}[30s]))",
           "format": "time_series",
-          "hide": true,
+          "hide": false,
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "上传速度",
+          "legendFormat": "{{chain_last}} U",
           "range": true,
           "refId": "B"
         }
       ],
       "title": "规则组速度",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 20,
+        "y": 5
+      },
+      "id": 36,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<div style=\"display: flex;justify-content: center;align-items: center;overflow: hidden;width:100%;heigt:100%\">\n<img src=\"https://azusebox.moe/wp-content/uploads/2023/06/yande.re-971345-ke-ta-konpaku_youmu-myon-touhou.png\" style=\"object-fit: fill;flex-shrink: 0;min-width: 100%;min-height: 100%;width: auto;\"></img>\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "9.2.1",
+      "type": "text"
     },
     {
       "datasource": {
@@ -1666,7 +1928,23 @@
             "filterable": false,
             "inspect": false
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "download": {
+                  "color": "semi-dark-purple",
+                  "index": 1,
+                  "text": "D"
+                },
+                "upload": {
+                  "color": "dark-blue",
+                  "index": 0,
+                  "text": "U"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1730,12 +2008,40 @@
                 "value": 291
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "type"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 94
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "类型"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "custom.width",
+                "value": 40
+              }
+            ]
           }
         ]
       },
       "gridPos": {
-        "h": 14,
-        "w": 24,
+        "h": 13,
+        "w": 15,
         "x": 0,
         "y": 20
       },
@@ -1768,7 +2074,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (chains, destination, source) (clash_network_traffic_bytes_total{source=~\"$source\", policy=~\"$policy\", type=~\"$type\"})",
+          "expr": "sum by (chains, destination, source, type) (clash_network_traffic_bytes_total{source=~\"$source\", policy=~\"$policy\", type=~\"$type\"})",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1815,7 +2121,8 @@
               "Value #E": "5分钟",
               "chains": "节点链",
               "destination": "目的地",
-              "source": "来源"
+              "source": "来源",
+              "type": "类型"
             }
           }
         }
@@ -1823,12 +2130,167 @@
       "type": "table"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 39,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "log": 2,
+              "type": "log"
+            },
+            "showPoints": "never",
+            "spanNulls": 60000,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "下载速度"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-BlPu"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "上传速度"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-YlBl"
+                }
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 9,
+        "x": 15,
+        "y": 20
+      },
+      "id": 39,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (destination)(rate(clash_network_traffic_bytes_total{type=\"download\"}[30s])) != 0",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{destination}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(rate(clash_network_traffic_bytes_total{type=\"upload\"}[30s]))",
+          "format": "time_series",
+          "hide": true,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "上传速度",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "目的地速度",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
       "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 33
       },
       "id": 29,
       "panels": [
@@ -2027,7 +2489,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 34
       },
       "id": 9,
       "panels": [
@@ -2375,11 +2837,13 @@
       "type": "row"
     }
   ],
-  "refresh": false,
+  "refresh": "10s",
   "revision": 1,
   "schemaVersion": 37,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "openclash"
+  ],
   "templating": {
     "list": [
       {
@@ -2453,13 +2917,13 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "OpenClash",
   "uid": "-pEeJqf4k",
-  "version": 20,
+  "version": 35,
   "weekStart": ""
 }
